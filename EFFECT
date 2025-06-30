@@ -1,0 +1,41 @@
+using UnityEngine;
+using UnityEngine.UI;
+
+public class ScoreEffect : MonoBehaviour
+{
+    private Text text;
+    private float moveSpeed = 100f; // 속도 증가
+    private float fadeSpeed = 2f;   // 페이드 속도 증가
+    private Color textColor;
+
+    void Start()
+    {
+        text = GetComponent<Text>();
+        if (text == null)
+        {
+            Debug.LogError("ScoreEffect: Text component not found!");
+            return;
+        }
+        textColor = text.color;
+        textColor.a = 1f; // 시작할 때 완전히 불투명하게
+        text.color = textColor;
+    }
+
+    void Update()
+    {
+        if (text == null) return;
+
+        // 위로 이동 (스크린 스페이스에서)
+        transform.Translate(Vector3.up * moveSpeed * Time.deltaTime);
+        
+        // 투명도 감소
+        textColor.a -= fadeSpeed * Time.deltaTime;
+        text.color = textColor;
+
+        // 완전히 투명해지면 제거
+        if (textColor.a <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+} 
