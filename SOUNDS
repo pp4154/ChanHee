@@ -1,0 +1,85 @@
+using UnityEngine;
+
+public class AudioManager : MonoBehaviour
+{
+    [Header("Audio Sources")]
+    [SerializeField] private AudioSource musicSource;    // 배경 음악용
+    [SerializeField] private AudioSource sfxSource;      // 효과음용
+
+    [Header("Audio Clips")]
+    [SerializeField] private AudioClip rotateSound;      // 블록 회전 효과음
+    [SerializeField] private AudioClip moveSound;        // 블록 이동 효과음
+    [SerializeField] private AudioClip dropSound;        // 블록 떨어짐 효과음
+    [SerializeField] private AudioClip clearSound;       // 줄 제거 효과음
+    [SerializeField] private AudioClip gameOverSound;    // 게임오버 효과음
+    [SerializeField] private AudioClip levelUpSound;     // 레벨업 효과음
+    [SerializeField] private AudioClip backgroundMusic;  // 배경 음악
+
+    private void Start()
+    {
+        // 배경 음악 재생
+        if (musicSource != null && backgroundMusic != null)
+        {
+            musicSource.clip = backgroundMusic;
+            musicSource.loop = true;
+            musicSource.Play();
+        }
+    }
+
+    // 효과음 재생 함수들
+    public void PlayRotateSound()
+    {
+        PlaySound(rotateSound);
+    }
+
+    public void PlayMoveSound()
+    {
+        PlaySound(moveSound);
+    }
+
+    public void PlayDropSound()
+    {
+        PlaySound(dropSound);
+    }
+
+    public void PlayClearSound()
+    {
+        PlaySound(clearSound);
+    }
+
+    public void PlayGameOverSound()
+    {
+        PlaySound(gameOverSound);
+    }
+
+    public void PlayLevelUpSound()
+    {
+        PlaySound(levelUpSound);
+    }
+
+    // 실제 효과음 재생 함수
+    private void PlaySound(AudioClip clip)
+    {
+        if (sfxSource != null && clip != null)
+        {
+            sfxSource.PlayOneShot(clip);
+        }
+    }
+
+    // 볼륨 조절 함수
+    public void SetMusicVolume(float volume)
+    {
+        if (musicSource != null)
+        {
+            musicSource.volume = volume;
+        }
+    }
+
+    public void SetSFXVolume(float volume)
+    {
+        if (sfxSource != null)
+        {
+            sfxSource.volume = volume;
+        }
+    }
+} 
