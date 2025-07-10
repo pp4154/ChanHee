@@ -1,0 +1,26 @@
+import random
+
+def 숫자_맞추기_게임():
+    """간단한 숫자 맞추기 게임"""
+    정답 = random.randint(1, 100)
+    추측_횟수 = 0
+
+    print("1부터 100 사이의 숫자를 맞춰보세요.")
+
+    while True:
+        try:
+            추측 = int(input("숫자를 입력하세요: "))
+            추측_횟수 += 1
+
+            if 추측 < 정답:
+                print("너무 낮습니다.")
+            elif 추측 > 정답:
+                print("너무 높습니다.")
+            else:
+                print(f"정답입니다! {추측_횟수}번 만에 맞추셨습니다.")
+                break
+        except ValueError:
+            print("유효한 숫자를 입력하세요.")
+
+if __name__ == "__main__":
+    숫자_맞추기_게임()
