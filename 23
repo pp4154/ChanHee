@@ -1,0 +1,63 @@
+; filename: student_id.asm
+; description: Sum of each digit from an integer student ID (e.g., 348)
+
+EXTERN printf : PROC
+
+.DATA
+    ; 학번(끝 3자리만 저장)
+    studentID     QWORD 348
+
+    ; 출력 형식 (영어) — 한글 깨짐 방지
+    msgResult     BYTE "Student ID (Integer): %d, Sum: %d", 10, 0
+
+.CODE
+main PROC
+    SUB RSP, 40               ; stack space for function call
+
+    ; --------------------------------------------
+    ; Load student ID into RBX (work register)
+    ; --------------------------------------------
+    MOV RBX, studentID        ; RBX = 348 (your student ID)
+    XOR RAX, RAX              ; RAX = sum accumulator (0)
+
+DigitLoop:
+    ; 종료 조건: RBX가 0이면 루프 종료
+    CMP RBX, 0
+    JE  PrintResult
+
+    ; 10으로 나누기 위해 상위 비트 초기화 (DIV는 RDX:RAX 사용)
+    XOR RDX, RDX              ; RDX = 0 (division high part)
+
+    MOV RCX, RBX              ; RCX = current number
+    MOV RAX, RCX              ; RAX = RCX (prepare for division)
+
+    MOV RCX, 10               ; divisor = 10
+    DIV RCX                   ; RAX = quotient, RDX = remainder
+
+    ; RDX = 현재 자릿수 (0~9)
+    ADD [sum], RDX            ; sum += digit (RDX)
+
+    ; RBX에 다음 값(quotient) 저장
+    MOV RBX, RAX
+    JMP DigitLoop
+
+PrintResult:
+    ; printf("Student ID (Integer): %d, Sum: %d", studentID, sum);
+
+    MOV RCX, OFFSET msgResult     ; 1st argument = format string
+    MOV RDX, studentID            ; 2nd argument = student ID number
+    MOV R8,  sum                  ; 3rd argument = digit sum
+
+    CALL printf
+
+    ; cleanup
+    XOR RAX, RAX
+    ADD RSP, 40
+    RET
+main ENDP
+
+; sum 변수 (자릿수 합 저장)
+.DATA
+sum QWORD 0
+
+END
