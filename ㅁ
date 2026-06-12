@@ -1,0 +1,29 @@
+import numpy as np
+
+# 1. 데이터 정의 (키, 몸무게)
+# 학생 번호는 인덱스로 취급하고 데이터 행렬에서는 제외합니다.
+data = np.array([
+    [158, 52],
+    [162, 55],
+    [165, 60],
+    [170, 64],
+    [173, 70],
+    [175, 72],
+    [178, 75],
+    [180, 82],
+    [182, 85],
+    [185, 88]
+])
+
+# 2. SVD 수행
+U, s, Vt = np.linalg.svd(data, full_matrices=False)
+
+# 3. 결과 출력
+print("--- Matrix U (Left Singular Vectors) ---")
+print(U)
+
+print("\n--- Singular Values (Sigma) ---")
+print(s)
+
+print("\n--- Matrix V^T (Right Singular Vectors) ---")
+print(Vt)
