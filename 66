@@ -1,0 +1,9 @@
+import random
+
+def roll_dice(count=2):
+    return [random.randint(1, 6) for _ in range(count)]
+
+dice = roll_dice()
+
+print("주사위:", dice)
+print("합계:", sum(dice))
