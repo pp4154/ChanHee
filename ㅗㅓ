@@ -1,0 +1,13 @@
+tasks = []
+
+while True:
+    print("\n1.Add  2.Show  3.Exit")
+    choice = input("Select: ")
+
+    if choice == "1":
+        tasks.append(input("Task: "))
+    elif choice == "2":
+        for i, task in enumerate(tasks, 1):
+            print(f"{i}. {task}")
+    elif choice == "3":
+        break
